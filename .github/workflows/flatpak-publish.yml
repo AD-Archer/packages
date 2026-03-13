@@ -100,7 +100,7 @@ jobs:
           {
             echo "[Flatpak Repo]"
             echo "Title=RustySound"
-            echo "Url=https://ad-archer.github.io/linux-packages/repo/"
+            echo "Url=https://ad-archer.github.io/packages/repo/"
             echo "Homepage=https://github.com/AD-Archer/RustySound"
             echo "Comment=Official RustySound Flatpak repository"
             echo "Description=Install RustySound directly from AD-Archer's Flatpak repository."
@@ -129,9 +129,9 @@ jobs:
           <body>
             <h1>RustySound Flatpak Repository</h1>
             <p>Flatpak repo URL:</p>
-            <p><code>https://ad-archer.github.io/linux-packages/repo/</code></p>
+            <p><code>https://ad-archer.github.io/packages/repo/</code></p>
             <p>Add repository:</p>
-            <p><code>flatpak remote-add --if-not-exists --user rustysound https://ad-archer.github.io/linux-packages/rustysound.flatpakrepo</code></p>
+            <p><code>flatpak remote-add --if-not-exists --user rustysound https://ad-archer.github.io/packages/rustysound.flatpakrepo</code></p>
             <p>Install app:</p>
             <p><code>flatpak install --user rustysound app.adarcher.rustysound</code></p>
             <p>Run app:</p>
