@@ -1,5 +1,5 @@
 pkgname=rustysound
-pkgver=0.1.75
+pkgver=0.1.76
 pkgrel=1
 pkgdesc="Cross-platform music streaming client for Navidrome/Subsonic servers"
 arch=('x86_64' 'aarch64')
@@ -18,7 +18,7 @@ makedepends=(
   'clang'
 )
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/AD-Archer/RustySound/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('cf0f39c59a120b023bb7c512ecc5f6c231d337751a1c3cb46ee99a04fdfc2929')
+sha256sums=('700a428063db25a0cb27b31cd2f5f40c157a9c3e24ee8683edbee67e712520c3')
 
 build() {
   cd "${srcdir}/RustySound-"*

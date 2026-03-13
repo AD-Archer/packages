@@ -23,10 +23,10 @@
         {
           "version": "0.1.0",
           "buildVersion": "0.1.0",
-          "date": "2026-03-12T19:40:47Z",
-          "localizedDescription": "## What's Changed\n* Fix Android build: artifact not found due to filename pattern mismatch by @Copilot in https://github.com/AD-Archer/RustySound/pull/58\n\n## New Contributors\n* @Copilot made their first contribution in https://github.com/AD-Archer/RustySound/pull/58\n\n**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v0.1.71...v0.1.74",
-          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v0.1.74/Rustysound-unsigned.ipa",
-          "size": 6901512,
+          "date": "2026-03-13T01:51:38Z",
+          "localizedDescription": "## What's Changed\n* Merge pull request #58 from AD-Archer/copilot/fix-android-build-issue by @AD-Archer in https://github.com/AD-Archer/RustySound/pull/59\n\n\n**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v0.1.74...v0.1.76",
+          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v0.1.76/Rustysound-unsigned.ipa",
+          "size": 6897856,
           "minOSVersion": "15.0"
         }
       ],
