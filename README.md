@@ -1,4 +1,4 @@
-# linux-packages
+# /packages
 
 Linux packaging source-of-truth for **ad-archer**.
 
@@ -36,7 +36,7 @@ When a new release is published in RustySound:
 AltStore source URL:
 
 ```text
-https://ad-archer.github.io/linux-packages/source.json
+https://ad-archer.github.io//packages/source.json
 ```
 
 ## Flatpak install (temporary repo)
@@ -44,7 +44,7 @@ https://ad-archer.github.io/linux-packages/source.json
 Once Pages deployment succeeds, users can install with:
 
 ```bash
-flatpak remote-add --if-not-exists --user adarcher-rustysound https://ad-archer.github.io/linux-packages/repo
+flatpak remote-add --if-not-exists --user adarcher-rustysound https://ad-archer.github.io//packages/repo
 flatpak install --user adarcher-rustysound app.adarcher.rustysound
 flatpak run app.adarcher.rustysound
 ```
