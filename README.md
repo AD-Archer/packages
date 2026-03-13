@@ -6,6 +6,7 @@ This repo stores packaging metadata for:
 - Flatpak (`flatpak/rustysound`)
 - AUR (`aur/rustysound`)
 - Nix expression (`nix/pkgs/rustysound`)
+- AltStore source (`altstore/source.json`)
 
 This is the staging/distribution repo while the app is not yet in official Flathub.
 
@@ -19,6 +20,8 @@ This is the staging/distribution repo while the app is not yet in official Flath
   Arch package recipe
 - `nix/pkgs/rustysound/default.nix`:
   Nix package expression
+- `altstore/source.json`:
+  AltStore source metadata, generated from RustySound iOS release assets
 
 ## Automation
 
@@ -27,7 +30,14 @@ Packaging updates are synced from `AD-Archer/RustySound` release automation.
 When a new release is published in RustySound:
 1. RustySound CI updates package manifests and checksums
 2. RustySound CI syncs files into this repo
-3. This repo's workflow (`.github/workflows/flatpak-publish.yml`) builds Flatpak and publishes a Flatpak repo to GitHub Pages
+3. This repo regenerates `altstore/source.json` from the iOS `.ipa` release asset
+4. This repo's workflow (`.github/workflows/flatpak-publish.yml`) builds Flatpak and publishes both Flatpak + AltStore files to GitHub Pages
+
+AltStore source URL:
+
+```text
+https://ad-archer.github.io/linux-packages/source.json
+```
 
 ## Flatpak install (temporary repo)
 

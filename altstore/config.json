@@ -1,0 +1,29 @@
+{
+  "source": {
+    "name": "ad-archer",
+    "subtitle": "Official ad-archer AltStore source",
+    "description": "Apps published by ad-archer.",
+    "iconURL": "https://www.antonioarcher.com/logo.webp",
+    "headerURL": "https://www.antonioarcher.com/logo.webp",
+    "website": "https://www.antonioarcher.com",
+    "tintColor": "#fb0946",
+    "featuredApps": [
+      "app.adarcher.rustysound"
+    ]
+  },
+  "app": {
+    "name": "RustySound",
+    "bundleIdentifier": "app.adarcher.rustysound",
+    "developerName": "Antonio Archer",
+    "subtitle": "A muliplatform opensubsonic music player built in Dixous using Rust.",
+    "localizedDescription": "RustySound for iOS distributed through AltStore.",
+    "iconURL": "https://raw.githubusercontent.com/AD-Archer/RustySound/main/assets/web-app-manifest-512x512.png",
+    "tintColor": "#ca2e04",
+    "category": "utilities",
+    "minOSVersion": "15.0"
+  },
+  "release": {
+    "repo": "AD-Archer/RustySound",
+    "asset_pattern": "(?i)\\.ipa$"
+  }
+}

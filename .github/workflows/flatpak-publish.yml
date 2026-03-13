@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'flatpak/rustysound/**'
+      - 'altstore/**'
   workflow_dispatch:
   workflow_run:
     workflows: ["Sync From RustySound Release"]
@@ -147,6 +148,7 @@ jobs:
           </html>
           HTML
           touch public/.nojekyll
+          cp altstore/source.json public/source.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

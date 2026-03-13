@@ -1,0 +1,42 @@
+{
+  "name": "ad-archer",
+  "subtitle": "Official ad-archer AltStore source",
+  "description": "Apps published by ad-archer.",
+  "iconURL": "https://www.antonioarcher.com/logo.webp",
+  "headerURL": "https://www.antonioarcher.com/logo.webp",
+  "website": "https://www.antonioarcher.com",
+  "tintColor": "#fb0946",
+  "featuredApps": [
+    "app.adarcher.rustysound"
+  ],
+  "apps": [
+    {
+      "name": "RustySound",
+      "bundleIdentifier": "app.adarcher.rustysound",
+      "developerName": "Antonio Archer",
+      "subtitle": "A muliplatform opensubsonic music player built in Dixous using Rust.",
+      "localizedDescription": "RustySound for iOS distributed through AltStore.",
+      "iconURL": "https://raw.githubusercontent.com/AD-Archer/RustySound/main/assets/web-app-manifest-512x512.png",
+      "tintColor": "#ca2e04",
+      "category": "utilities",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "buildVersion": "0.1.0",
+          "date": "2026-03-12T19:40:47Z",
+          "localizedDescription": "## What's Changed\n* Fix Android build: artifact not found due to filename pattern mismatch by @Copilot in https://github.com/AD-Archer/RustySound/pull/58\n\n## New Contributors\n* @Copilot made their first contribution in https://github.com/AD-Archer/RustySound/pull/58\n\n**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v0.1.71...v0.1.74",
+          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v0.1.74/Rustysound-unsigned.ipa",
+          "size": 6901512,
+          "minOSVersion": "15.0"
+        }
+      ],
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {
+          "NSLocalNetworkUsageDescription": "RustySound needs local network access to stream from your media server."
+        }
+      }
+    }
+  ],
+  "news": []
+}

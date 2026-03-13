@@ -88,6 +88,14 @@ jobs:
             -o flatpak/rustysound/cargo-sources.json \
             "${LOCK_FILE}"
 
+      - name: Regenerate AltStore source.json
+        run: |
+          set -euo pipefail
+          python3 scripts/generate_altstore_source.py \
+            --config altstore/config.json \
+            --output altstore/source.json \
+            --tag '${{ steps.version.outputs.tag }}'
+
       - name: Commit and push
         run: |
           set -euo pipefail
@@ -97,7 +105,8 @@ jobs:
           git add \
             flatpak/rustysound/app.adarcher.rustysound.yml \
             flatpak/rustysound/cargo-sources.json \
-            aur/rustysound/PKGBUILD
+            aur/rustysound/PKGBUILD \
+            altstore/source.json
 
           if git diff --cached --quiet; then
             echo "No packaging changes to commit."
