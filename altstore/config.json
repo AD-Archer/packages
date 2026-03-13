@@ -20,7 +20,18 @@
     "iconURL": "https://raw.githubusercontent.com/AD-Archer/RustySound/main/assets/web-app-manifest-512x512.png",
     "tintColor": "#ca2e04",
     "category": "utilities",
-    "minOSVersion": "15.0"
+    "minOSVersion": "15.0",
+    "screenshots": [
+      {
+        "imageURL": "https://www.antonioarcher.com/images/projects/rustysound/desktop/sound_menu.webp"
+      },
+      {
+        "imageURL": "https://github.com/user-attachments/assets/06267508-388f-456b-a2e3-ae45dc00f11c"
+      },
+      {
+        "imageURL": "https://github.com/user-attachments/assets/bc93c22e-bcf1-4a41-9d3c-fdba82a36214"
+      }
+    ]
   },
   "release": {
     "repo": "AD-Archer/RustySound",

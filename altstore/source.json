@@ -23,10 +23,10 @@
         {
           "version": "0.1.0",
           "buildVersion": "0.1.0",
-          "date": "2026-03-13T02:19:11Z",
-          "localizedDescription": "**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v0.1.75...v0.1.77",
-          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v0.1.77/Rustysound-unsigned.ipa",
-          "size": 6924223,
+          "date": "2026-03-12T19:40:47Z",
+          "localizedDescription": "## What's Changed\n* Fix Android build: artifact not found due to filename pattern mismatch by @Copilot in https://github.com/AD-Archer/RustySound/pull/58\n\n## New Contributors\n* @Copilot made their first contribution in https://github.com/AD-Archer/RustySound/pull/58\n\n**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v0.1.71...v0.1.74",
+          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v0.1.74/Rustysound-unsigned.ipa",
+          "size": 6901512,
           "minOSVersion": "15.0"
         }
       ],
@@ -35,7 +35,18 @@
         "privacy": {
           "NSLocalNetworkUsageDescription": "RustySound needs local network access to stream from your media server."
         }
-      }
+      },
+      "screenshots": [
+        {
+          "imageURL": "https://www.antonioarcher.com/images/projects/rustysound/desktop/sound_menu.webp"
+        },
+        {
+          "imageURL": "https://github.com/user-attachments/assets/06267508-388f-456b-a2e3-ae45dc00f11c"
+        },
+        {
+          "imageURL": "https://github.com/user-attachments/assets/bc93c22e-bcf1-4a41-9d3c-fdba82a36214"
+        }
+      ]
     }
   ],
   "news": []
