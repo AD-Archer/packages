@@ -1,0 +1,41 @@
+name: Validate AltStore Source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'altstore/**'
+      - 'scripts/generate_altstore_source.py'
+      - '.github/workflows/altstore-source-check.yml'
+  pull_request:
+    paths:
+      - 'altstore/**'
+      - 'scripts/generate_altstore_source.py'
+      - '.github/workflows/altstore-source-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify generated AltStore source
+        run: |
+          set -euo pipefail
+
+          TMP_SOURCE="$(mktemp)"
+          cp altstore/source.json "${TMP_SOURCE}"
+
+          python3 scripts/generate_altstore_source.py \
+            --config altstore/config.json \
+            --output "${TMP_SOURCE}"
+
+          if ! diff -u altstore/source.json "${TMP_SOURCE}"; then
+            echo "altstore/source.json is stale. Regenerate it with scripts/generate_altstore_source.py before merging."
+            exit 1
+          fi
