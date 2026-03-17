@@ -58,8 +58,8 @@ modules:
       - install -Dm644 assets/web-app-manifest-512x512.png /app/share/icons/hicolor/512x512/apps/app.adarcher.rustysound.png
     sources:
       - type: archive
-        url: https://github.com/AD-Archer/RustySound/archive/refs/tags/v0.1.81.tar.gz
-        sha256: 103a05375cf75d0c646f96fa8fa274e9431d97f37eb723edb73ba24ee9c26440
+        url: https://github.com/AD-Archer/RustySound/archive/refs/tags/v0.1.82.tar.gz
+        sha256: c399577360f8806e6ce0807b6f810456ac06fef4984fb6dfd1bb339ef0d6ed4d
         strip-components: 1
       - type: file
         path: app.adarcher.rustysound.desktop
