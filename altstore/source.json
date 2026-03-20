@@ -21,6 +21,15 @@
       "category": "utilities",
       "versions": [
         {
+          "version": "0.1.83",
+          "buildVersion": "0.1.83",
+          "date": "2026-03-20T20:55:08Z",
+          "localizedDescription": "**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v0.1.82...v0.1.83",
+          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v0.1.83/Rustysound-unsigned.ipa",
+          "size": 7202430,
+          "minOSVersion": "15.0"
+        },
+        {
           "version": "0.1.82",
           "buildVersion": "0.1.82",
           "date": "2026-03-17T16:36:32Z",
