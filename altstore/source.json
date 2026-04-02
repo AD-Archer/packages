@@ -21,6 +21,15 @@
       "category": "utilities",
       "versions": [
         {
+          "version": "3.1.88",
+          "buildVersion": "3.1.88",
+          "date": "2026-04-02T18:18:25Z",
+          "localizedDescription": "## What's Changed\n* build(deps): bump rustls-webpki from 0.103.8 to 0.103.10 in the cargo group across 1 directory by @dependabot[bot] in https://github.com/AD-Archer/RustySound/pull/71\n\n\n**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v3.1.87...v3.1.88",
+          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v3.1.88/Rustysound-unsigned.ipa",
+          "size": 7485036,
+          "minOSVersion": "15.0"
+        },
+        {
           "version": "3.1.87",
           "buildVersion": "3.1.87",
           "date": "2026-04-02T17:56:13Z",
