@@ -21,6 +21,15 @@
       "category": "utilities",
       "versions": [
         {
+          "version": "3.1.97",
+          "buildVersion": "3.1.97",
+          "date": "2026-10-30T18:08:09Z",
+          "localizedDescription": "## What's Changed\n* build(deps-dev): bump @types/bun from 1.3.2 to 1.4.4 in the test-tools group by @dependabot[bot] in https://github.com/AD-Archer/RustySound/pull/90\n* build(deps): bump the rust group with 8 updates by @dependabot[bot] in https://github.com/AD-Archer/RustySound/pull/92\n* build(deps): bump rusqlite from 0.32.1 to 0.41.0 by @dependabot[bot] in https://github.com/AD-Archer/RustySound/pull/96\n\n\n**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v3.1.93...v3.1.97",
+          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v3.1.97/Rustysound-unsigned.ipa",
+          "size": 8554491,
+          "minOSVersion": "15.0"
+        },
+        {
           "version": "3.1.93",
           "buildVersion": "3.1.93",
           "date": "2026-04-28T19:18:05Z",
