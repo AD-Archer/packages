@@ -9,7 +9,7 @@
 # (or set it once in ~/.makepkg.conf). Nothing here forces a value.
 
 pkgname=rustysound
-pkgver=3.1.97
+pkgver=3.1.99
 pkgrel=1
 pkgdesc="Cross-platform music streaming client for Navidrome/Subsonic servers"
 arch=('x86_64' 'aarch64')
@@ -36,7 +36,7 @@ makedepends=(
 # packaging/linux/rustysound.desktop file (v3.1.97 and older).
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/AD-Archer/RustySound/archive/refs/tags/v${pkgver}.tar.gz"
         'rustysound.desktop')
-sha256sums=('339b5cf5a930528fcfa5726c8abf910ddf03255ca561e5f54eea07ffd6221eef'
+sha256sums=('20d6a07429458b43118982002bf35bcb55f5622ca9a9dd350151dd1a37714728'
             '61faf2241b984783e697d413f83039d0e9b1faa33bdc10b530941f561026bd24')
 
 prepare() {

@@ -21,6 +21,15 @@
       "category": "utilities",
       "versions": [
         {
+          "version": "3.1.99",
+          "buildVersion": "3.1.99",
+          "date": "2026-11-07T17:38:54Z",
+          "localizedDescription": "**Full Changelog**: https://github.com/AD-Archer/RustySound/compare/v3.1.97...v3.1.99",
+          "downloadURL": "https://github.com/AD-Archer/RustySound/releases/download/v3.1.99/Rustysound-unsigned.ipa",
+          "size": 11156760,
+          "minOSVersion": "15.0"
+        },
+        {
           "version": "3.1.97",
           "buildVersion": "3.1.97",
           "date": "2026-10-30T18:08:09Z",
@@ -168,7 +177,7 @@
       "appPermissions": {
         "entitlements": [],
         "privacy": {
-          "NSLocalNetworkUsageDescription": "RustySound needs local network access to stream from your media server."
+          "NSLocalNetworkUsageDescription": "RustySound uses your local network to stream from your media server and to play on speakers."
         }
       },
       "screenshots": [
