@@ -11,9 +11,14 @@ finish-args:
   - --socket=session-bus
   - --share=ipc
   - --share=network
-  - --env=GDK_BACKEND=x11
-  - --env=DISPLAY=:0
-  - --socket=x11
+  # Native Wayland when available, X11 (XWayland or a plain X session) otherwise.
+  - --socket=wayland
+  - --socket=fallback-x11
+  # WebKitGTK's DMA-BUF renderer shows a blank/white window on some GPU
+  # drivers (NVIDIA especially) inside Flatpak. Turning it off costs nothing
+  # noticeable for a music player. Users can undo it with:
+  #   flatpak override --user --unset-env=WEBKIT_DISABLE_DMABUF_RENDERER app.adarcher.rustysound
+  - --env=WEBKIT_DISABLE_DMABUF_RENDERER=1
   - --socket=pulseaudio
   - --device=dri
   - --filesystem=xdg-download
@@ -48,11 +53,13 @@ modules:
         directory = "cargo/vendor"
         EOF
       - cargo build --offline --release --locked --no-default-features --features desktop
-      - install -Dm755 target/release/rustysound /app/bin/rustysound
-      - mkdir -p /app/lib/RustySound/assets
-      - cp -a assets/. /app/lib/RustySound/assets/
-      - mkdir -p /app/bin/assets
-      - cp -a assets/. /app/bin/assets/
+      # Same layout as the native packages: the binary and its assets/ live
+      # together in /app/lib/rustysound, and /app/bin only holds a symlink.
+      - install -Dm755 target/release/rustysound /app/lib/rustysound/rustysound
+      - mkdir -p /app/lib/rustysound/assets
+      - cp -a assets/. /app/lib/rustysound/assets/
+      - mkdir -p /app/bin
+      - ln -sf ../lib/rustysound/rustysound /app/bin/rustysound
       - install -Dm644 app.adarcher.rustysound.desktop /app/share/applications/app.adarcher.rustysound.desktop
       - install -Dm644 app.adarcher.rustysound.metainfo.xml /app/share/metainfo/app.adarcher.rustysound.metainfo.xml
       - install -Dm644 assets/web-app-manifest-512x512.png /app/share/icons/hicolor/512x512/apps/app.adarcher.rustysound.png

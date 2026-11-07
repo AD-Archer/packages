@@ -1,0 +1,23 @@
+pkgbase = rustysound-bin
+	pkgdesc = Cross-platform music streaming client for Navidrome/Subsonic servers (prebuilt)
+	pkgver = 3.1.97
+	pkgrel = 1
+	url = https://github.com/AD-Archer/RustySound
+	arch = x86_64
+	license = GPL-3.0-or-later
+	depends = webkit2gtk-4.1
+	depends = gtk3
+	depends = libxdo
+	depends = openssl
+	depends = gstreamer
+	depends = gst-plugins-base
+	depends = gst-plugins-good
+	optdepends = gst-libav: play AAC/M4A and other formats through FFmpeg
+	provides = rustysound
+	conflicts = rustysound
+	options = !strip
+	options = !debug
+	source = RustySound-3.1.97-linux-x86_64.tar.gz::https://github.com/AD-Archer/RustySound/releases/download/v3.1.97/RustySound-3.1.97-linux-x86_64.tar.gz
+	sha256sums = SKIP
+
+pkgname = rustysound-bin

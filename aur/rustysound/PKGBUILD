@@ -1,34 +1,73 @@
+# Maintainer: Antonio Archer <antonioarcher.dev@gmail.com>
+#
+# Builds RustySound from source. For a prebuilt package that installs in
+# seconds, use rustysound-bin instead.
+#
+# Compiling needs a lot of memory. On a machine with little RAM, limit the
+# number of parallel compile jobs before building, for example:
+#   CARGO_BUILD_JOBS=2 makepkg -si
+# (or set it once in ~/.makepkg.conf). Nothing here forces a value.
+
 pkgname=rustysound
 pkgver=3.1.97
 pkgrel=1
 pkgdesc="Cross-platform music streaming client for Navidrome/Subsonic servers"
 arch=('x86_64' 'aarch64')
 url="https://github.com/AD-Archer/RustySound"
-license=('MIT')
+license=('GPL-3.0-or-later')
 depends=(
   'webkit2gtk-4.1'
   'gtk3'
   'libxdo'
   'openssl'
+  'gstreamer'
+  'gst-plugins-base'
+  'gst-plugins-good'
+)
+optdepends=(
+  'gst-libav: play AAC/M4A and other formats through FFmpeg'
 )
 makedepends=(
   'cargo'
-  'rust'
   'pkgconf'
   'clang'
 )
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/AD-Archer/RustySound/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('339b5cf5a930528fcfa5726c8abf910ddf03255ca561e5f54eea07ffd6221eef')
+# rustysound.desktop is a fallback for releases that predate the upstream
+# packaging/linux/rustysound.desktop file (v3.1.97 and older).
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/AD-Archer/RustySound/archive/refs/tags/v${pkgver}.tar.gz"
+        'rustysound.desktop')
+sha256sums=('339b5cf5a930528fcfa5726c8abf910ddf03255ca561e5f54eea07ffd6221eef'
+            '61faf2241b984783e697d413f83039d0e9b1faa33bdc10b530941f561026bd24')
+
+prepare() {
+  cd "${srcdir}/RustySound-${pkgver}"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/^host: //p')"
+}
 
 build() {
-  cd "${srcdir}/RustySound-"*
-  cargo build --release --locked --no-default-features --features desktop
+  cd "${srcdir}/RustySound-${pkgver}"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR=target
+  cargo build --frozen --release --no-default-features --features desktop
 }
 
 package() {
-  cd "${srcdir}/RustySound-"*
-  install -Dm755 "target/release/rustysound" "${pkgdir}/usr/bin/rustysound"
-  install -Dm644 "packaging/aur/rustysound.desktop" "${pkgdir}/usr/share/applications/rustysound.desktop"
-  install -Dm644 "assets/web-app-manifest-512x512.png" "${pkgdir}/usr/share/icons/hicolor/512x512/apps/rustysound.png"
-  install -Dm644 "LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  cd "${srcdir}/RustySound-${pkgver}"
+
+  # The app looks for assets/ next to its real binary, so both go into
+  # /usr/lib/rustysound and /usr/bin only gets a symlink.
+  install -Dm755 target/release/rustysound "${pkgdir}/usr/lib/rustysound/rustysound"
+  install -dm755 "${pkgdir}/usr/lib/rustysound/assets"
+  cp -r --no-preserve=ownership assets/. "${pkgdir}/usr/lib/rustysound/assets/"
+  install -dm755 "${pkgdir}/usr/bin"
+  ln -s /usr/lib/rustysound/rustysound "${pkgdir}/usr/bin/rustysound"
+
+  if [[ -f packaging/linux/rustysound.desktop ]]; then
+    install -Dm644 packaging/linux/rustysound.desktop "${pkgdir}/usr/share/applications/rustysound.desktop"
+  else
+    install -Dm644 "${srcdir}/rustysound.desktop" "${pkgdir}/usr/share/applications/rustysound.desktop"
+  fi
+  install -Dm644 assets/web-app-manifest-512x512.png "${pkgdir}/usr/share/icons/hicolor/512x512/apps/rustysound.png"
+  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

@@ -1,0 +1,51 @@
+# Maintainer: Antonio Archer <antonioarcher.dev@gmail.com>
+#
+# Installs the prebuilt Linux build from the RustySound GitHub release.
+# Nothing is compiled. To build from source instead, use the rustysound package.
+#
+# pkgver and sha256sums are filled in automatically by
+# .github/workflows/sync-rustysound-release.yml when a release comes out.
+# 'SKIP' below is only a placeholder until the first Linux release asset exists;
+# never publish this PKGBUILD to the AUR while it still says SKIP.
+
+pkgname=rustysound-bin
+_pkgname=rustysound
+pkgver=3.1.97
+pkgrel=1
+pkgdesc="Cross-platform music streaming client for Navidrome/Subsonic servers (prebuilt)"
+arch=('x86_64')
+url="https://github.com/AD-Archer/RustySound"
+license=('GPL-3.0-or-later')
+depends=(
+  'webkit2gtk-4.1'
+  'gtk3'
+  'libxdo'
+  'openssl'
+  'gstreamer'
+  'gst-plugins-base'
+  'gst-plugins-good'
+)
+optdepends=(
+  'gst-libav: play AAC/M4A and other formats through FFmpeg'
+)
+provides=('rustysound')
+conflicts=('rustysound')
+options=('!strip' '!debug')
+source=("RustySound-${pkgver}-linux-x86_64.tar.gz::https://github.com/AD-Archer/RustySound/releases/download/v${pkgver}/RustySound-${pkgver}-linux-x86_64.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+  cd "${srcdir}/RustySound-${pkgver}-linux-x86_64"
+
+  # The app looks for assets/ next to its real binary, so both go into
+  # /usr/lib/rustysound and /usr/bin only gets a symlink.
+  install -Dm755 rustysound "${pkgdir}/usr/lib/${_pkgname}/rustysound"
+  install -dm755 "${pkgdir}/usr/lib/${_pkgname}/assets"
+  cp -r --no-preserve=ownership assets/. "${pkgdir}/usr/lib/${_pkgname}/assets/"
+  install -dm755 "${pkgdir}/usr/bin"
+  ln -s "/usr/lib/${_pkgname}/rustysound" "${pkgdir}/usr/bin/rustysound"
+
+  install -Dm644 rustysound.desktop "${pkgdir}/usr/share/applications/rustysound.desktop"
+  install -Dm644 rustysound.png "${pkgdir}/usr/share/icons/hicolor/512x512/apps/rustysound.png"
+  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

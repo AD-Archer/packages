@@ -61,8 +61,74 @@ jobs:
           sed -i -E "s|^[[:space:]]*url: https://github.com/AD-Archer/RustySound/archive/refs/tags/v[^/]+\.tar\.gz$|        url: ${URL}|" flatpak/rustysound/app.adarcher.rustysound.yml
           sed -i -E "s|^[[:space:]]*sha256: [a-f0-9]{64}$|        sha256: ${SHA}|" flatpak/rustysound/app.adarcher.rustysound.yml
 
+          # aur/rustysound (build from source). The first sha256sums entry is the
+          # source tarball; the second is the local fallback .desktop file.
           sed -i -E "s|^pkgver=.*$|pkgver=${VERSION}|" aur/rustysound/PKGBUILD
-          sed -i -E "s|^sha256sums=\('[a-f0-9]{64}'\)$|sha256sums=('${SHA}')|" aur/rustysound/PKGBUILD
+          sed -i -E "s|^pkgrel=.*$|pkgrel=1|" aur/rustysound/PKGBUILD
+          sed -i -E "s|^sha256sums=\('[a-f0-9]{64}'|sha256sums=('${SHA}'|" aur/rustysound/PKGBUILD
+
+          # .SRCINFO is updated by hand (no makepkg on Ubuntu runners). Keep it in
+          # the same order as the PKGBUILD.
+          sed -i -E "s|^(\t)pkgver = .*$|\1pkgver = ${VERSION}|" aur/rustysound/.SRCINFO
+          sed -i -E "s|^(\t)pkgrel = .*$|\1pkgrel = 1|" aur/rustysound/.SRCINFO
+          sed -i -E "s|^(\t)source = rustysound-.*\.tar\.gz::.*$|\1source = rustysound-${VERSION}.tar.gz::${URL}|" aur/rustysound/.SRCINFO
+          sed -i -E "0,/^\tsha256sums = /s|^(\t)sha256sums = .*$|\1sha256sums = ${SHA}|" aur/rustysound/.SRCINFO
+
+      - name: Update rustysound-bin (AUR) + Nix from the prebuilt Linux tarball
+        run: |
+          set -euo pipefail
+          TAG='${{ steps.version.outputs.tag }}'
+          VERSION='${{ steps.version.outputs.version }}'
+          ASSET="RustySound-${VERSION}-linux-x86_64.tar.gz"
+          BIN_URL="https://github.com/AD-Archer/RustySound/releases/download/${TAG}/${ASSET}"
+
+          # The Linux build may still be uploading when the release is announced,
+          # so wait for it for up to 30 minutes.
+          found=false
+          for attempt in $(seq 1 30); do
+            if curl -fsSL "${BIN_URL}" -o /tmp/rustysound-linux.tar.gz; then
+              found=true
+              break
+            fi
+            echo "Attempt ${attempt}: ${ASSET} not available yet; waiting 60s..."
+            sleep 60
+          done
+
+          if [[ "${found}" != "true" ]]; then
+            echo "::warning::${ASSET} was not found on ${TAG}; rustysound-bin and Nix were left unchanged."
+            exit 0
+          fi
+
+          # Make sure the tarball has the layout the packages expect.
+          TOP="RustySound-${VERSION}-linux-x86_64"
+          LISTING="$(tar -tzf /tmp/rustysound-linux.tar.gz | sed 's|^\./||')"
+          for f in rustysound rustysound.desktop rustysound.png LICENSE; do
+            if ! grep -qxF "${TOP}/${f}" <<<"${LISTING}"; then
+              echo "::error::${ASSET} is missing ${TOP}/${f}"
+              exit 1
+            fi
+          done
+          if ! grep -q "^${TOP}/assets/" <<<"${LISTING}"; then
+            echo "::error::${ASSET} is missing ${TOP}/assets/"
+            exit 1
+          fi
+
+          BIN_SHA="$(sha256sum /tmp/rustysound-linux.tar.gz | awk '{print $1}')"
+          NIX_HASH="$(python3 -c 'import base64,hashlib,sys; print("sha256-" + base64.b64encode(hashlib.sha256(open(sys.argv[1], "rb").read()).digest()).decode())' /tmp/rustysound-linux.tar.gz)"
+
+          # aur/rustysound-bin
+          sed -i -E "s|^pkgver=.*$|pkgver=${VERSION}|" aur/rustysound-bin/PKGBUILD
+          sed -i -E "s|^pkgrel=.*$|pkgrel=1|" aur/rustysound-bin/PKGBUILD
+          sed -i -E "s|^sha256sums=\(.*\)$|sha256sums=('${BIN_SHA}')|" aur/rustysound-bin/PKGBUILD
+          sed -i -E "s|^(\t)pkgver = .*$|\1pkgver = ${VERSION}|" aur/rustysound-bin/.SRCINFO
+          sed -i -E "s|^(\t)pkgrel = .*$|\1pkgrel = 1|" aur/rustysound-bin/.SRCINFO
+          sed -i -E "s|^(\t)source = .*$|\1source = ${ASSET}::${BIN_URL}|" aur/rustysound-bin/.SRCINFO
+          sed -i -E "s|^(\t)sha256sums = .*$|\1sha256sums = ${BIN_SHA}|" aur/rustysound-bin/.SRCINFO
+
+          # nix/pkgs/rustysound (prebuilt tarball)
+          sed -i -E "s|^(  version = )\".*\";$|\1\"${VERSION}\";|" nix/pkgs/rustysound/default.nix
+          sed -i -E "s|^(    hash = ).*;$|\1\"${NIX_HASH}\";|" nix/pkgs/rustysound/default.nix
+          sed -i -E "/NEEDS UPDATE: placeholder/d" nix/pkgs/rustysound/default.nix
 
       - name: Regenerate Flatpak cargo-sources.json
         run: |
@@ -106,6 +172,10 @@ jobs:
             flatpak/rustysound/app.adarcher.rustysound.yml \
             flatpak/rustysound/cargo-sources.json \
             aur/rustysound/PKGBUILD \
+            aur/rustysound/.SRCINFO \
+            aur/rustysound-bin/PKGBUILD \
+            aur/rustysound-bin/.SRCINFO \
+            nix/pkgs/rustysound/default.nix \
             altstore/source.json
 
           if git diff --cached --quiet; then

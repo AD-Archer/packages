@@ -6,6 +6,7 @@ on:
     paths:
       - 'flatpak/rustysound/**'
       - 'altstore/**'
+      - 'install.sh'
   workflow_dispatch:
   workflow_run:
     workflows: ["Sync From RustySound Release"]
@@ -136,7 +137,7 @@ jobs:
             <p>Flatpak repo URL:</p>
             <p><code>https://ad-archer.github.io/packages/repo/</code></p>
             <p>Add repository:</p>
-            <p><code>flatpak remote-add --if-not-exists --user rustysound https://ad-archer.github.io/packages/rustysound.flatpakrepo</code></p>
+            <p><code>flatpak remote-add --if-not-exists --user adarcher-apps https://ad-archer.github.io/packages/rustysound.flatpakrepo</code></p>
             <p>Install app:</p>
             <p><code>flatpak install --user rustysound app.adarcher.rustysound//stable</code></p>
             <p>Run app:</p>
@@ -145,6 +146,8 @@ jobs:
               <p><a href="https://www.antonioarcher.com/projects/rustysound" target="_blank" rel="noopener">RustySound project page</a></p>
               <p>Demo:</p>
               <p><a href="https://rustysound-demo.adarcher.app" target="_blank" rel="noopener">Live demo</a></p>
+            <p>Install without Flatpak (Linux x86_64, no root needed):</p>
+            <p><code>curl -fsSL https://ad-archer.github.io/packages/install.sh | sh</code></p>
             <p>Direct bundle:</p>
             <p><a href="./rustysound.flatpak">rustysound.flatpak</a></p>
             <p>Remote file:</p>
@@ -154,6 +157,7 @@ jobs:
           HTML
           touch public/.nojekyll
           cp altstore/source.json public/source.json
+          cp install.sh public/install.sh
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

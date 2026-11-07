@@ -1,58 +1,87 @@
+# RustySound from the prebuilt Linux release tarball (nothing is compiled).
+#
+# `version` and `hash` are bumped by .github/workflows/sync-rustysound-release.yml.
+# Until the first release that ships RustySound-<version>-linux-x86_64.tar.gz,
+# `hash` is lib.fakeHash: building prints the real hash, paste it in.
 { lib
-, rustPlatform
-, pkg-config
-, openssl
+, stdenv
+, fetchurl
+, autoPatchelfHook
+, wrapGAppsHook3
+, makeWrapper
 , webkitgtk_4_1
 , gtk3
 , libsoup_3
 , glib
-, gdk-pixbuf
-, pango
-, cairo
-, atk
+, glib-networking
 , xdotool
+, openssl
+, gst_all_1
 }:
 
-rustPlatform.buildRustPackage rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "rustysound";
-  version = "1.0.0";
+  version = "3.1.97";
 
-  src = lib.cleanSource ../..;
-
-  cargoLock = {
-    lockFile = ../../Cargo.lock;
+  src = fetchurl {
+    url = "https://github.com/AD-Archer/RustySound/releases/download/v${finalAttrs.version}/RustySound-${finalAttrs.version}-linux-x86_64.tar.gz";
+    # NEEDS UPDATE: placeholder until a release with the Linux tarball exists.
+    hash = lib.fakeHash;
   };
 
   nativeBuildInputs = [
-    pkg-config
+    autoPatchelfHook
+    wrapGAppsHook3
+    makeWrapper
   ];
 
   buildInputs = [
-    openssl
+    stdenv.cc.cc.lib
     webkitgtk_4_1
     gtk3
     libsoup_3
     glib
-    gdk-pixbuf
-    pango
-    cairo
-    atk
+    glib-networking
     xdotool
+    openssl
+    # WebKit plays audio through GStreamer.
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-libav
   ];
 
-  cargoBuildFlags = [
-    "--no-default-features"
-    "--features"
-    "desktop"
-  ];
+  dontConfigure = true;
+  dontBuild = true;
+  # The wrapper is made by hand below so it points at the real binary,
+  # which has to stay next to its assets/ folder.
+  dontWrapGApps = true;
 
-  doCheck = false;
+  installPhase = ''
+    runHook preInstall
 
-  meta = with lib; {
+    mkdir -p $out/lib/rustysound $out/bin
+    cp rustysound $out/lib/rustysound/rustysound
+    chmod 755 $out/lib/rustysound/rustysound
+    cp -r assets $out/lib/rustysound/assets
+
+    install -Dm644 rustysound.desktop $out/share/applications/rustysound.desktop
+    install -Dm644 rustysound.png $out/share/icons/hicolor/512x512/apps/rustysound.png
+
+    runHook postInstall
+  '';
+
+  preFixup = ''
+    makeWrapper $out/lib/rustysound/rustysound $out/bin/rustysound \
+      "''${gappsWrapperArgs[@]}"
+  '';
+
+  meta = {
     description = "Cross-platform music streaming client for Navidrome/Subsonic servers";
     homepage = "https://github.com/AD-Archer/RustySound";
-    license = licenses.mit;
-    platforms = platforms.linux;
+    license = lib.licenses.gpl3Plus;
+    platforms = [ "x86_64-linux" ];
+    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
     mainProgram = "rustysound";
   };
-}
+})
