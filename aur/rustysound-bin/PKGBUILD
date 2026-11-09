@@ -10,7 +10,7 @@
 
 pkgname=rustysound-bin
 _pkgname=rustysound
-pkgver=3.1.100
+pkgver=3.1.101
 pkgrel=1
 pkgdesc="Cross-platform music streaming client for Navidrome/Subsonic servers (prebuilt)"
 arch=('x86_64')
@@ -32,7 +32,7 @@ provides=('rustysound')
 conflicts=('rustysound')
 options=('!strip' '!debug')
 source=("RustySound-${pkgver}-linux-x86_64.tar.gz::https://github.com/AD-Archer/RustySound/releases/download/v${pkgver}/RustySound-${pkgver}-linux-x86_64.tar.gz")
-sha256sums=('8cf9a80fe9dcbebae3f0d4768d0d355043a5f4d58ff29e9c2764a88a615f1aff')
+sha256sums=('bea1d6afa9ab0476673e1ba5ae0b2fa809fd8e23c1f5b34b49de622e6bd63878')
 
 package() {
   cd "${srcdir}/RustySound-${pkgver}-linux-x86_64"

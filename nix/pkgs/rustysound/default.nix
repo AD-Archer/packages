@@ -21,11 +21,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "rustysound";
-  version = "3.1.100";
+  version = "3.1.101";
 
   src = fetchurl {
     url = "https://github.com/AD-Archer/RustySound/releases/download/v${finalAttrs.version}/RustySound-${finalAttrs.version}-linux-x86_64.tar.gz";
-    hash = "sha256-jPmoD+ncvrrj8NR2jQ01UEOl9NWP8p6cJ2SoimFfGv8=";
+    hash = "sha256-vqHWr6mrBHZnPhulrgsvqAn9jiPB9bNLSd5iLmvWOHg=";
   };
 
   nativeBuildInputs = [
